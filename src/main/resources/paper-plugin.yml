@@ -1,0 +1,6 @@
+name: FuelLoader
+version: '${version}'
+main: com.akon.fuel.loader.plugin.FuelLoaderPlugin
+api-version: '1.21'
+authors: [ akon ]
+bootstrapper: com.akon.fuel.loader.plugin.FuelLoaderPluginBootstrap
