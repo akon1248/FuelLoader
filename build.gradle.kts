@@ -4,6 +4,7 @@ plugins {
     kotlin("jvm") version "2.1.20"
     id("com.gradleup.shadow") version "8.3.0"
     id("io.papermc.paperweight.userdev") version "2.0.0-beta.14"
+    id("maven-publish")
 }
 
 group = "com.akon"
@@ -62,6 +63,28 @@ tasks {
 
 artifacts {
     archives(tasks.shadowJar)
+}
+
+fun tryFindProperty(name: String): String {
+    return project.findProperty(name) as? String ?: throw IllegalStateException("Property $name not found")
+}
+
+publishing {
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/akon1248/FuelLoader")
+            credentials {
+                username = tryFindProperty("gpr.user")
+                password = tryFindProperty("gpr.key")
+            }
+        }
+    }
+    publications {
+        create<MavenPublication>("gpr") {
+            from(components["java"])
+        }
+    }
 }
 
 paperweight.reobfArtifactConfiguration = ReobfArtifactConfiguration.MOJANG_PRODUCTION
