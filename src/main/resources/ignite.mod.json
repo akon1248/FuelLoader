@@ -1,0 +1,7 @@
+{
+    "id": "fuel_loader",
+    "version": "${version}",
+    "mixins": [
+        "mixins.fuel-loader.json"
+    ]
+}
