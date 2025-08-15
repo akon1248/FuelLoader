@@ -28,9 +28,11 @@ abstract class DummyPluginBootstrap(
             qualifiedName,
             generateClass()
         ) // We need to use the PaperPluginClassLoader to load a plugin class.
-        return clazz
+        val plugin = clazz
             .getDeclaredConstructor(PluginLifecycleDelegate::class.java)
             .newInstance(lifecycleDelegate) as JavaPlugin
+        lifecycleDelegate.onInstantiate(plugin)
+        return plugin
     }
 
     private fun generateClass(): ByteArray {
